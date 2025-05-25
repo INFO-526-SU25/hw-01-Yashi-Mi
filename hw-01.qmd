@@ -19,15 +19,38 @@ if (!require("pacman"))
 
 # use this line for installing/loading
 pacman::p_load (tidyverse,
-                  palmerpenguins )
+              palmerpenguins )
 
 devtools::install_github("tidyverse/dsbox")
+
+install.packages("here")
+library(here)
 ```
 
 ## 1 - Road traffic accidents in Edinburgh
 
 ```{r label-me-1}
+accidents <- read_csv(here("data","accidents.csv"))
+glimpse(accidents)
+```
 
+```{r}
+accidents <- accidents |>
+  mutate(day_type = case_when(
+    day_of_week %in% c("Saturday", "Sunday") ~ "Weekend",
+    day_of_week %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") ~ "Weekday",
+    TRUE ~ as.character(day_of_week)))
+ggplot(accidents, aes(x = time, fill = severity)) +
+  geom_density(alpha=0.6) +
+  facet_grid(day_type ~ .) +
+  scale_fill_manual("Severity", values = c("#8E6C8A", "#5E9CA0", "#F4E04D")) +
+  labs(
+    title = "Number of accidents throughout the day",
+    subtitle = "By day of week and severity",
+    x = "Time of day",
+    y = "Density"
+  ) +
+  theme_minimal(base_size = 14)
 ```
 
 ## 2 - NYC marathon winners
