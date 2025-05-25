@@ -23,7 +23,6 @@ pacman::p_load (tidyverse,
 
 devtools::install_github("tidyverse/dsbox")
 
-install.packages("here")
 library(here)
 ```
 
@@ -42,7 +41,7 @@ accidents <- accidents |>
     TRUE ~ as.character(day_of_week)))
 ggplot(accidents, aes(x = time, fill = severity)) +
   geom_density(alpha=0.6) +
-  facet_grid(day_type ~ .) +
+  facet_wrap(~day_type, ncol=1) +
   scale_fill_manual("Severity", values = c("#8E6C8A", "#5E9CA0", "#F4E04D")) +
   labs(
     title = "Number of accidents throughout the day",
@@ -52,6 +51,14 @@ ggplot(accidents, aes(x = time, fill = severity)) +
   ) +
   theme_minimal(base_size = 14)
 ```
+
+::: callout-note
+The figure illustrates the distribution of road traffic accidents in Edinburgh across different times of day, separated by weekday and weekend, and categorized by severity (Fatal, Serious, Slight).
+
+On weekdays, the number of serious and slight accidents peaks between 16:00 and 18:00, likely corresponding to evening rush hours. Fatal accidents show a smaller peak around midday (12:00).
+
+On weekends, the number of slight accidents also peaks around 16:00, but serious accidents tend to peak slightly later, between 18:00 and 20:00. Notably, there are no fatal accidents reported on weekends in this dataset.
+:::
 
 ## 2 - NYC marathon winners
 
