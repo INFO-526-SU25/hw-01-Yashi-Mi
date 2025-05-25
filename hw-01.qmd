@@ -1,9 +1,13 @@
 ---
 title: "HW 01"
-author: "INSERT YOUR NAME HERE"
+author: "Yashi Mi"
 format: 
   html:
     embed-resources: true
+execute: 
+  warning: false
+  message: false
+  error: false
 toc: true
 ---
 
@@ -14,7 +18,8 @@ if (!require("pacman"))
   install.packages("pacman")
 
 # use this line for installing/loading
-# pacman::p_load() 
+pacman::p_load (tidyverse,
+                  palmerpenguins )
 
 devtools::install_github("tidyverse/dsbox")
 ```
