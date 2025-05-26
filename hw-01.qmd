@@ -132,6 +132,28 @@ The plot shows how marathon finishing times have changed over the past decades. 
 
 ## 3 - US counties
 
+::: callout-note
+A.
+
+“geom_point(aes(x = median_edu, y = median_hh_income))”
+
+This line creates a scatter plot to show the relationship between median years of education and median household income across U.S. counties.
+
+“geom_boxplot(aes(x = smoking_ban, y = pop2017))”
+
+This line creates a boxplot showing the distribution of 2017 population sizes grouped by smoking ban status.
+
+However, combining these two plots doesn't make sense because they use different x-axes: one is a continuous variable (median_edu) and the other is a categorical variable (smoking_ban).
+:::
+
+::: callout-note
+B.
+
+The second plot makes it much easier to compare poverty levels across people from different median education levels. This is because all four groups share the same y-axis scale (poverty), which facilitates direct visual comparison.
+
+This suggests that when your goal is to compare values on the y-axis, you should place the faceting variable across columns to keep the y-axis consistent. Conversely, if you are focusing on comparisons along the x-axis, it's better to facet across rows.
+:::
+
 ## 4 - Rental apartments in SF
 
 ## 5 - Napoleon’s march.
