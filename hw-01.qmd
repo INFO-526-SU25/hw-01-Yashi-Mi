@@ -167,34 +167,34 @@ ggplot(county_clean, aes(x = homeownership, y = poverty))+
   
 ggplot(county_clean, aes(x = homeownership, y = poverty))+
   geom_point()+
-  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue")+
+  geom_smooth(method = "gam", se = FALSE, color = "Blue")+
   labs(title = "Plot B") 
 
 ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro))+
   geom_point()+
-  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Green")+
+  geom_smooth(method = "gam",se = FALSE, color = "Green")+
   labs(title = "Plot C") 
 
 ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro))+
-  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue")+
+  geom_smooth(method = "gam", se = FALSE, color = "Blue")+
   geom_point()+
   labs(title = "Plot D") 
 
 ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro))+
   geom_point(aes(color = metro))+
-  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue", aes(linetype = metro))+
+  geom_smooth(method = "gam", se = FALSE, color = "Blue", aes(linetype = metro))+
   guides(color = guide_legend(order = 2),    
     linetype = guide_legend(order = 1)) +
   labs(title = "Plot E") 
 
 ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro, color =   metro))+
   geom_point()+
-  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, )+
+  geom_smooth(method = "gam", se = FALSE, )+
   labs(title = "Plot F") 
 
 ggplot(county_clean, aes(x = homeownership, y = poverty))+
   geom_point(aes(group = metro, color = metro))+
-  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue")+
+  geom_smooth(method = "gam",  se = FALSE, color = "Blue")+
   labs(title = "Plot G") 
 
 ggplot(county_clean, aes(x = homeownership, y = poverty))+
@@ -204,5 +204,56 @@ ggplot(county_clean, aes(x = homeownership, y = poverty))+
 ```
 
 ## 4 - Rental apartments in SF
+
+```{r}
+credit <- read_csv(here("data","credit.csv"))
+glimpse(credit)
+```
+
+```{r}
+library(scales)
+
+ggplot(credit, aes(x = income,y = balance, color = student, shape = student ))+
+  geom_point(alpha = 0.6,show.legend = FALSE)+
+  geom_smooth(method = "lm", se = FALSE, show.legend = FALSE)+
+  labs(x = "Income", y = "Credit card balance")+
+  facet_grid(student ~ married, labeller = label_both)+
+  scale_x_continuous(labels = dollar_format(prefix = "$", suffix = "K"))+
+  scale_y_continuous(labels = dollar_format(prefix = "$"))+
+  theme_minimal(base_size = 14) +
+  theme( strip.background = element_rect(fill = "grey90"),
+         panel.border = element_rect(color = "Black", fill = NA))
+ 
+```
+
+::: callout-note
+This figure illustrates the relationship between income and credit card balance, segmented by student status and marital status. Overall, there is a positive correlation between income and credit card balance. Compared to non-students, students tend to carry higher credit card balances at similar income levels. Among students, married individuals generally have lower balances than their unmarried peers with comparable incomes.
+:::
+
+::: callout-note
+I believe that marital status and student status are useful predictors, in addition to income, for predicting credit card balance. Students tend to have higher credit card balances than non-students at similar income levels. Additionally, married individuals generally have lower balances than unmarried individuals, which suggests a potential interaction effect between marital status and student status.
+:::
+
+```{r}
+library(scales)
+
+credit <- credit|>
+  mutate(credit_utilization = balance/limit)
+    
+ggplot(credit, aes(x = income,y = credit_utilization, color = student, shape = student ))+
+  geom_point(alpha = 0.6,show.legend = FALSE)+
+  geom_smooth(method = "lm", se = FALSE, show.legend = FALSE)+
+  labs(x = "Income", y = "Credit utilization")+
+  facet_grid(student ~ married, labeller = label_both)+
+  scale_x_continuous(labels = dollar_format(prefix = "$", suffix = "K"))+
+  scale_y_continuous(labels = label_percent(suffix = "%"))+
+  theme_minimal(base_size = 14) +
+  theme( strip.background = element_rect(fill = "grey90"),
+         panel.border = element_rect(color = "Black", fill = NA))
+```
+
+::: callout-note
+The relationships between income and credit utilization differ from those between income and credit card balance. Among non-students, income and credit utilization show a positive correlation, consistent with the pattern observed for credit card balance. However, for student groups, the correlation between income and credit utilization appears to follow an opposite trend compared to the relationship with credit card balance. Additionally, married individuals generally have lower credit utilization than unmarried individuals at similar income levels.
+:::
 
 ## 5 - Napoleon’s march.
