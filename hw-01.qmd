@@ -63,8 +63,72 @@ On weekends, the number of slight accidents also peaks around 16:00, but serious
 ## 2 - NYC marathon winners
 
 ```{r label-me-2}
+nyc_marathon <- read_csv(here("data","nyc_marathon.csv"))
+glimpse(nyc_marathon)
+```
+
+```{r}
+nyc_marathon_clean <- nyc_marathon |>
+  filter(!is.na(time_hrs))
+
+ggplot(nyc_marathon_clean, aes(x = time_hrs))+
+  geom_histogram(binwidth = 0.0625)+
+   labs(x = "Finishing Time (hours)",
+    y = "Count" )+
+    theme_minimal(base_size = 14)
+
+ggplot(nyc_marathon_clean, aes(y = time_hrs))+
+  geom_boxplot()+
+   labs(y = "Finishing Time (hours)" )+
+    theme_minimal(base_size = 14)
 
 ```
+
+::: callout-note
+The histogram shows the overall distribution of finishing times for all marathon runners, making it easier to observe the frequency of different time intervals. In contrast, the box plot summarizes key statistics such as the median, interquartile range, and potential outliers.
+:::
+
+```{r}
+ggplot(nyc_marathon_clean, aes(x = division,y = time_hrs, fill = division))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("Blue","Red"))+
+   labs(x = "Gender",
+     y = "Finishing Time (hours)" )+
+    theme_minimal(base_size = 14)
+```
+
+::: callout-note
+This figure compares the distribution of marathon finishing times between male and female runners. It clearly shows that female runners tend to have longer finishing times than male runners.
+:::
+
+```{r}
+ggplot(nyc_marathon_clean, aes(x = division,y = time_hrs, fill = division))+
+  geom_boxplot(show.legend = FALSE)+
+  scale_fill_manual(values = c("Blue","Red"))+
+   labs(x = "Gender",
+     y = "Finishing Time (hours)" )+
+    theme_minimal(base_size = 14)
+```
+
+::: callout-note
+Since the gender information is already clearly labeled on the x-axis, the color legend becomes redundant. Removing the legend increases the data-to-ink ratio by reducing unnecessary visual elements.
+:::
+
+```{r}
+ggplot(nyc_marathon_clean, aes(x = year,y = time_hrs, color   = division,shap = division))+
+  geom_point(stat = "summary", fun = "mean")+
+  scale_color_manual(values = c("Blue","Red")) +
+  scale_shape_manual(values = c("5","7")) +
+   labs(x = "year",
+    y = "Finishing Time (hours)",
+    color = "Gender",
+    shape = "Gender")+
+    theme_minimal(base_size = 14)
+```
+
+::: callout-note
+The plot shows how marathon finishing times have changed over the past decades. It reveals a notable downward trend in finishing times for both men and women. Additionally, men consistently finished faster than women throughout the recorded years.
+:::
 
 ## 3 - US counties
 
