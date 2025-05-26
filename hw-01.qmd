@@ -43,12 +43,10 @@ ggplot(accidents, aes(x = time, fill = severity)) +
   geom_density(alpha=0.6) +
   facet_wrap(~day_type, ncol=1) +
   scale_fill_manual("Severity", values = c("#8E6C8A", "#5E9CA0", "#F4E04D")) +
-  labs(
-    title = "Number of accidents throughout the day",
+  labs(title = "Number of accidents throughout the day",
     subtitle = "By day of week and severity",
     x = "Time of day",
-    y = "Density"
-  ) +
+    y = "Density") +
   theme_minimal(base_size = 14)
 ```
 
@@ -153,6 +151,57 @@ The second plot makes it much easier to compare poverty levels across people fro
 
 This suggests that when your goal is to compare values on the y-axis, you should place the faceting variable across columns to keep the y-axis consistent. Conversely, if you are focusing on comparisons along the x-axis, it's better to facet across rows.
 :::
+
+```{r}
+library(openintro)
+glimpse(county)  
+```
+
+```{r}
+county_clean <- county |>
+  filter(!is.na(homeownership),!is.na(poverty))
+
+ggplot(county_clean, aes(x = homeownership, y = poverty))+
+  geom_point()+
+  labs(title = "Plot A") 
+  
+ggplot(county_clean, aes(x = homeownership, y = poverty))+
+  geom_point()+
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue")+
+  labs(title = "Plot B") 
+
+ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro))+
+  geom_point()+
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Green")+
+  labs(title = "Plot C") 
+
+ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro))+
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue")+
+  geom_point()+
+  labs(title = "Plot D") 
+
+ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro))+
+  geom_point(aes(color = metro))+
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue", aes(linetype = metro))+
+  guides(color = guide_legend(order = 2),    
+    linetype = guide_legend(order = 1)) +
+  labs(title = "Plot E") 
+
+ggplot(county_clean, aes(x = homeownership, y = poverty, group = metro, color =   metro))+
+  geom_point()+
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, )+
+  labs(title = "Plot F") 
+
+ggplot(county_clean, aes(x = homeownership, y = poverty))+
+  geom_point(aes(group = metro, color = metro))+
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = FALSE, color = "Blue")+
+  labs(title = "Plot G") 
+
+ggplot(county_clean, aes(x = homeownership, y = poverty))+
+  geom_point(aes(group = metro, color = metro))+
+  labs(title = "Plot H") 
+
+```
 
 ## 4 - Rental apartments in SF
 
