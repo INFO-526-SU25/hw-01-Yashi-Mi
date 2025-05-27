@@ -11,7 +11,11 @@ execute:
 toc: true
 ---
 
+
+
 ## 0 - Setup
+
+
 
 ```{r setup}
 if (!require("pacman")) 
@@ -26,7 +30,11 @@ devtools::install_github("tidyverse/dsbox")
 library(here)
 ```
 
+
+
 ## 1 - Road traffic accidents in Edinburgh
+
+
 
 ```{r label-me-1}
 accidents <- read_csv(here("data","accidents.csv"))
@@ -50,6 +58,8 @@ ggplot(accidents, aes(x = time, fill = severity)) +
   theme_minimal(base_size = 14)
 ```
 
+
+
 ::: callout-note
 The figure illustrates the distribution of road traffic accidents in Edinburgh across different times of day, separated by weekday and weekend, and categorized by severity (Fatal, Serious, Slight).
 
@@ -59,6 +69,8 @@ On weekends, the number of slight accidents also peaks around 16:00, but serious
 :::
 
 ## 2 - NYC marathon winners
+
+
 
 ```{r label-me-2}
 nyc_marathon <- read_csv(here("data","nyc_marathon.csv"))
@@ -82,9 +94,13 @@ ggplot(nyc_marathon_clean, aes(y = time_hrs))+
 
 ```
 
+
+
 ::: callout-note
 The histogram shows the overall distribution of finishing times for all marathon runners, making it easier to observe the frequency of different time intervals. In contrast, the box plot summarizes key statistics such as the median, interquartile range, and potential outliers.
 :::
+
+
 
 ```{r}
 ggplot(nyc_marathon_clean, aes(x = division,y = time_hrs, fill = division))+
@@ -95,9 +111,13 @@ ggplot(nyc_marathon_clean, aes(x = division,y = time_hrs, fill = division))+
     theme_minimal(base_size = 14)
 ```
 
+
+
 ::: callout-note
 This figure compares the distribution of marathon finishing times between male and female runners. It clearly shows that female runners tend to have longer finishing times than male runners.
 :::
+
+
 
 ```{r}
 ggplot(nyc_marathon_clean, aes(x = division,y = time_hrs, fill = division))+
@@ -108,9 +128,13 @@ ggplot(nyc_marathon_clean, aes(x = division,y = time_hrs, fill = division))+
     theme_minimal(base_size = 14)
 ```
 
+
+
 ::: callout-note
 Since the gender information is already clearly labeled on the x-axis, the color legend becomes redundant. Removing the legend increases the data-to-ink ratio by reducing unnecessary visual elements.
 :::
+
+
 
 ```{r}
 ggplot(nyc_marathon_clean, aes(x = year,y = time_hrs, color   = division,shap = division))+
@@ -123,6 +147,8 @@ ggplot(nyc_marathon_clean, aes(x = year,y = time_hrs, color   = division,shap = 
     shape = "Gender")+
     theme_minimal(base_size = 14)
 ```
+
+
 
 ::: callout-note
 The plot shows how marathon finishing times have changed over the past decades. It reveals a notable downward trend in finishing times for both men and women. Additionally, men consistently finished faster than women throughout the recorded years.
@@ -151,6 +177,8 @@ The second plot makes it much easier to compare poverty levels across people fro
 
 This suggests that when your goal is to compare values on the y-axis, you should place the faceting variable across columns to keep the y-axis consistent. Conversely, if you are focusing on comparisons along the x-axis, it's better to facet across rows.
 :::
+
+
 
 ```{r}
 library(openintro)
@@ -203,7 +231,11 @@ ggplot(county_clean, aes(x = homeownership, y = poverty))+
 
 ```
 
+
+
 ## 4 - Rental apartments in SF
+
+
 
 ```{r}
 credit <- read_csv(here("data","credit.csv"))
@@ -226,6 +258,8 @@ ggplot(credit, aes(x = income,y = balance, color = student, shape = student ))+
  
 ```
 
+
+
 ::: callout-note
 This figure illustrates the relationship between income and credit card balance, segmented by student status and marital status. Overall, there is a positive correlation between income and credit card balance. Compared to non-students, students tend to carry higher credit card balances at similar income levels. Among students, married individuals generally have lower balances than their unmarried peers with comparable incomes.
 :::
@@ -233,6 +267,8 @@ This figure illustrates the relationship between income and credit card balance,
 ::: callout-note
 I believe that marital status and student status are useful predictors, in addition to income, for predicting credit card balance. Students tend to have higher credit card balances than non-students at similar income levels. Additionally, married individuals generally have lower balances than unmarried individuals, which suggests a potential interaction effect between marital status and student status.
 :::
+
+
 
 ```{r}
 library(scales)
@@ -252,11 +288,15 @@ ggplot(credit, aes(x = income,y = credit_utilization, color = student, shape = s
          panel.border = element_rect(color = "Black", fill = NA))
 ```
 
+
+
 ::: callout-note
 The relationships between income and credit utilization differ from those between income and credit card balance. Among non-students, income and credit utilization show a positive correlation, consistent with the pattern observed for credit card balance. However, for student groups, the correlation between income and credit utilization appears to follow an opposite trend compared to the relationship with credit card balance. Additionally, married individuals generally have lower credit utilization than unmarried individuals at similar income levels.
 :::
 
 ## 5 - Napoleon’s march.
+
+
 
 ```{r}
 
@@ -318,6 +358,8 @@ grid.draw(both.1812.plot.simple)
 
 ```
 
+
+
 ::: callout-note
 I adapted and reproduced the Napoleon’s March plot using code from the following blog post:
 
@@ -360,6 +402,8 @@ This resource provided a solid foundation for understanding how to structure the
 
 18\. Combined the two plots using ggplotGrob() and rbind(), and adjusted their relative heights with unit(c(3, 1), "null").
 :::
+
+
 
 ```{r}
 library(ggrepel)
@@ -408,3 +452,4 @@ both.1812.plot.simple$heights[panels] <- unit(c(3, 1), "null")
 grid.newpage()
 grid.draw(both.1812.plot.simple)
 ```
+
