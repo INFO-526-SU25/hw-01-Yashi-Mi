@@ -131,7 +131,7 @@ The plot shows how marathon finishing times have changed over the past decades. 
 ## 3 - US counties
 
 ::: callout-note
-A.
+A.  
 
 “geom_point(aes(x = median_edu, y = median_hh_income))”
 
@@ -145,7 +145,7 @@ However, combining these two plots doesn't make sense because they use different
 :::
 
 ::: callout-note
-B.
+B.  
 
 The second plot makes it much easier to compare poverty levels across people from different median education levels. This is because all four groups share the same y-axis scale (poverty), which facilitates direct visual comparison.
 
